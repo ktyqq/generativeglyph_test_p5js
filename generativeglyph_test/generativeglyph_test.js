@@ -6,11 +6,6 @@ function setup() {
   stroke(10, 100);
   noFill();
   t = 0;
-  if(stop) loop();
-  canvas.mousePressed(function() {
-    stop = !stop;
-    stop ? noLoop() : loop()
-        })
   background(255);
   frameRate(20);
 }
@@ -36,6 +31,14 @@ pop();
 
   t += 0.009;
   }
+  
+
+function mouseClicked() {
+if (isLooping()) {
+  noLoop();
+} else {
+loop(); }
+}
 
 function keyPressed() {
   if (keyCode === 82) {

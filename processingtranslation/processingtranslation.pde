@@ -1,6 +1,7 @@
-int t = 0;
+float t = 0;
 String myText = "click to pause/play, press r to reset canvas!";
 import processing.svg.*;
+import processing.pdf.*;
 
 void setup() {
   size(displayWidth, displayHeight);
@@ -8,15 +9,21 @@ void setup() {
   noFill();
   background(255);
   frameRate(20);
+  createGraphics(displayWidth, displayHeight);
+  beginRecord(SVG, "generative.svg");
+  //beginRecord(PDF, "everything.pdf");
 }
 
 void draw() {
+  
   push();
   fill(0);
   noStroke();
   textAlign(CENTER);
-  text(myText, displayWidth/2, 0.9*displayHeight);
+  textSize(24);
+  text(myText, displayWidth/2, 0.8*displayHeight);
   pop();
+  
 //curves generating
   float x1 = width  * noise(t + 10);
   float x2 = mouseX * noise(t + 20);
@@ -30,7 +37,8 @@ void draw() {
   bezier(x1, y1, x2, y2, x3, y3, x4, y4);
 
   t += 0.009;
-  }
+  
+}
 
 void mouseClicked() {
 if (isLooping()) {
@@ -44,6 +52,7 @@ void keyPressed() {
   background(255);
   }
   if (keyCode == ENTER) {
-    //endRecord();
+    endRecord();
+    beginRecord(SVG, "generative2.svg");
   } 
 }

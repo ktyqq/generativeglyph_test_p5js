@@ -1,7 +1,8 @@
-float t = 0;
+float t = 0.0;
 String myText = "click to pause/play, press r to reset canvas!";
 import processing.svg.*;
-import processing.pdf.*;
+//import processing.pdf.*;
+boolean record;
 
 void setup() {
   size(displayWidth, displayHeight);
@@ -9,13 +10,15 @@ void setup() {
   noFill();
   background(255);
   frameRate(20);
-  createGraphics(displayWidth, displayHeight);
-  beginRecord(SVG, "generative.svg");
+  //createGraphics(displayWidth, displayHeight);
   //beginRecord(PDF, "everything.pdf");
 }
 
 void draw() {
-  
+  if (record) {
+   // Note that #### will be replaced with the frame number. Fancy!
+   beginRecord(SVG, "frame-####.svg");
+  }
   push();
   fill(0);
   noStroke();
@@ -38,7 +41,12 @@ void draw() {
 
   t += 0.009;
   
+  if (record) {
+    endRecord();
+  record = false;
+  }
 }
+  
 
 void mouseClicked() {
 if (isLooping()) {
@@ -52,7 +60,6 @@ void keyPressed() {
   background(255);
   }
   if (keyCode == ENTER) {
-    endRecord();
-    beginRecord(SVG, "generative2.svg");
-  } 
+    record = true;
+  }
 }
